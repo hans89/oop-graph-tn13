@@ -31,7 +31,7 @@ private:
     D *data;
 };
 
-template<template<typename,typename> class E, typename V, typename D> 
+template<typename V, template<typename,typename> class E, typename D> 
 struct EdgeCompare {
     bool operator()(E<V,D>* firstEdge, E<V,D>* secondEdge) {
         V   *s1 = firstEdge->getSource(),

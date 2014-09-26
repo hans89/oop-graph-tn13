@@ -8,9 +8,7 @@ public:
     BreadthFirstIterator(Graph<V,E,D>* g) : graph(g) {
         set<V*> vertices = graph->getAllVertices();
         
-        typename set<V*>::iterator it = vertices.begin();
-        
-        vQueue.push(*it);
+        vQueue.push(*(vertices.begin()));
     }
     
     BreadthFirstIterator(Graph<V,E,D>* g, V* s) : graph(g), startVertex(s) {
@@ -22,12 +20,15 @@ public:
     }
     
     V* getNext() {
-        V* current = vQueue.front();
-        vQueue.pop();
-        
-        extendVisit(current);
-        
-        return current;
+        if (hasNext()) {
+            V* current = vQueue.front();
+            vQueue.pop();
+            
+            extendVisit(current);
+            
+            return current;    
+        }
+        return NULL;
     }
     
 private:

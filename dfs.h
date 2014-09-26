@@ -8,9 +8,7 @@ public:
     DepthFirstIterator(Graph<V,E,D>* g) : graph(g) {
         set<V*> vertices = graph->getAllVertices();
         
-        typename set<V*>::iterator it = vertices.begin();
-        
-        vStack.push(*it);
+        vStack.push(*(vertices.begin()));
     }
     
     DepthFirstIterator(Graph<V,E,D>* g, V* s) : graph(g), startVertex(s) {
@@ -22,12 +20,15 @@ public:
     }
     
     V* getNext() {
-        V* current = vStack.top();
-        vStack.pop();
-        
-        extendVisit(current);
-        
-        return current;
+        if (hasNext()) {
+            V* current = vStack.top();
+            vStack.pop();
+            
+            extendVisit(current);
+            
+            return current;    
+        }
+        return NULL;
     }
     
 private:
