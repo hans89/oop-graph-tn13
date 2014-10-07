@@ -2,13 +2,14 @@
 #include "graph.h"
 #include "bfs.h"
 #include "dfs.h"
+#include "prim.h"
 
 using namespace std;
 
 int main(void) {
-    typedef Graph<int, DefaultEdge, double> IntWIGraph;
+    typedef Graph<int, DefaultEdge, double> IntWDGraph;
     
-    IntWIGraph g;
+    IntWDGraph g;
     
     int v[6] = {0,1,2,3,4,5};
     double data[7] = {0.2,1.3,2.4,3.5,4.6,5.7,6.8};
@@ -29,7 +30,7 @@ int main(void) {
         cout << *v << endl;
     }
     
-    g.printEdges();
+    // g.printEdges();
     
     // IntWIGraph::EdgeSet edges = g.edgesFrom(&v[4]);
     
@@ -41,36 +42,49 @@ int main(void) {
     //     edge->print();
     // }
     
-    typedef Graph<char, DefaultEdge, int> IntWCGraph;
+    // typedef Graph<char, DefaultEdge, int> IntWCGraph;
     
-    char l[] ="abcdefgh";
+    // char l[] ="abcdefgh";
     
-    IntWCGraph cGraph;
+    // IntWCGraph cGraph;
     
-    cGraph.addEdge(&l[0], &l[1]); // a->b
-    cGraph.addEdge(&l[0], &l[2]); // a->c
-    cGraph.addEdge(&l[1], &l[3]); // b->d
-    cGraph.addEdge(&l[1], &l[4]); // b->e
-    cGraph.addEdge(&l[4], &l[7]); // e->h
-    cGraph.addEdge(&l[2], &l[5]); // c->f
-    cGraph.addEdge(&l[2], &l[6]); // c->g
+    // cGraph.addEdge(&l[0], &l[1]); // a->b
+    // cGraph.addEdge(&l[0], &l[2]); // a->c
+    // cGraph.addEdge(&l[1], &l[3]); // b->d
+    // cGraph.addEdge(&l[1], &l[4]); // b->e
+    // cGraph.addEdge(&l[4], &l[7]); // e->h
+    // cGraph.addEdge(&l[2], &l[5]); // c->f
+    // cGraph.addEdge(&l[2], &l[6]); // c->g
     
-    BreadthFirstIterator<char, DefaultEdge, int> cBFS(&cGraph);
+    // BreadthFirstIterator<char, DefaultEdge, int> cBFS(&cGraph);
     
-    while (cBFS.hasNext()) {
-        char *v = cBFS.getNext();
+    // while (cBFS.hasNext()) {
+    //     char *v = cBFS.getNext();
         
-        cout << *v << endl;
-    }
+    //     cout << *v << endl;
+    // }
     
-    cout << endl;
+    // cout << endl;
     
-    DepthFirstIterator<char, DefaultEdge, int> cDFS(&cGraph);
+    // DepthFirstIterator<char, DefaultEdge, int> cDFS(&cGraph);
     
-    while (cDFS.hasNext()) {
-        char *v = cDFS.getNext();
+    // while (cDFS.hasNext()) {
+    //     char *v = cDFS.getNext();
         
-        cout << *v << endl;
+    //     cout << *v << endl;
+    // }
+
+    PrimMinimumSpanningTree<int, DefaultEdge, double> prim(g);
+
+    IntWDGraph::EdgeSet gSpanningTree =  prim.getMinimumSpanningTreeEdges();
+
+    IntWDGraph::EdgeSetIterator it;
+    
+    cout << "Spanning Tree:" << endl;
+    for (it = gSpanningTree.begin(); it != gSpanningTree.end(); ++it) {
+        DefaultEdge<int,double>* edge = *it;
+        
+        edge->print();
     }
     
     return 0;

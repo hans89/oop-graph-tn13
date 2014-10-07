@@ -1,3 +1,6 @@
+#ifndef __GRAPH__
+#define __GRAPH__
+
 #include <set>
 
 using namespace std;
@@ -7,15 +10,15 @@ class DefaultEdge {
 public:
     DefaultEdge(V* s, V* t, D* d = NULL) : source(s), target(t), data(d) {}
     
-    V* getSource() { 
+    V* getSource() const { 
         return source;
     }
     
-    V* getTarget() {
+    V* getTarget() const {
         return target;
     }
     
-    D* getData() {
+    D* getData() const {
         return data;
     }
     
@@ -33,7 +36,7 @@ private:
 
 template<typename V, template<typename,typename> class E, typename D> 
 struct EdgeCompare {
-    bool operator()(E<V,D>* firstEdge, E<V,D>* secondEdge) {
+    bool operator()(const E<V,D>* firstEdge, const E<V,D>* secondEdge) {
         V   *s1 = firstEdge->getSource(),
             *e1 = firstEdge->getTarget(),
             *s2 = secondEdge->getSource(),
@@ -46,7 +49,7 @@ struct EdgeCompare {
 template<typename V, template<typename, typename> class E, typename D>
 class Graph {
 public:
-    typedef set<E<V,D>*, EdgeCompare<E,V,D>> EdgeSet;
+    typedef set<E<V,D>*, EdgeCompare<V,E,D> > EdgeSet;
     typedef typename EdgeSet::iterator EdgeSetIterator;
     
     Graph(set<V*> vs, EdgeSet es)
@@ -72,7 +75,7 @@ public:
         }
     }
     
-    set<V*> getAllVertices() {
+    set<V*>& getAllVertices() {
         return vertices;
     }
     
@@ -104,7 +107,7 @@ public:
         return toVertices;
     }
     
-    EdgeSet getAllEdges() {
+    EdgeSet& getAllEdges() {
         return edges;
     }
     
@@ -151,3 +154,5 @@ private:
     set<V*> vertices;
     EdgeSet edges;
 };
+
+#endif

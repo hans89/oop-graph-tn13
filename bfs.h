@@ -1,3 +1,6 @@
+#ifndef __BFS__
+#define __BFS__
+
 #include <queue>
 
 using namespace std;
@@ -52,3 +55,5 @@ private:
         }
     }
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __DFS__
+#define __DFS__
+
 #include <stack>
 
 using namespace std;
@@ -52,3 +55,5 @@ private:
         }
     }
 };
+
+#endif
